@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
+
+<GridPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="/view.Controller">
+   <columnConstraints>
+      <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+   </rowConstraints>
+   <children>
+      <Button fx:id="addSongButton" mnemonicParsing="false" onAction="#processButton" text="Add Song" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+      <Button fx:id="deleteSongButton" mnemonicParsing="false" onAction="#processButton" text="Delete Song" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+      <Button fx:id="editSongButton" mnemonicParsing="false" onAction="#processButton" text="Edit Song" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title:" textAlignment="RIGHT" wrappingWidth="96.04296875" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Artist:" textAlignment="RIGHT" wrappingWidth="99.64453125" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Album:" textAlignment="RIGHT" wrappingWidth="100.4296875" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Year:" textAlignment="RIGHT" wrappingWidth="99.787109375" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+      <TextField fx:id="titleInput" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+      <TextField fx:id="artistInput" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+      <TextField fx:id="albumInput" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+      <TextField fx:id="yearInput" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+      <ListView minHeight="-Infinity" minWidth="-Infinity" prefHeight="221.0" prefWidth="100.0" GridPane.rowIndex="4" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Song Title:" textAlignment="RIGHT" wrappingWidth="97.13671875" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Song Artist:" textAlignment="RIGHT" wrappingWidth="99.13671875" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Song Album:" textAlignment="RIGHT" wrappingWidth="96.666015625" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Song Year:" textAlignment="RIGHT" wrappingWidth="94.13671875" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <Text fx:id="TitleOutput" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="93.13671875" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+      <Text fx:id="ArtistOutput" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="97.13671875" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <Text fx:id="AlbumOutput" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="92.13671875" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+      <Text fx:id="YearOutput" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="92.13671875" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+   </children>
+</GridPane>
