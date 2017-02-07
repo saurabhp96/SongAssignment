@@ -19,6 +19,8 @@ public class SongLib extends Application {
 			BorderPane root = new BorderPane();
 			Scene scene = new Scene(root,400,400);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setResizable(false);
+			primaryStage.setTitle("Song Library");
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {

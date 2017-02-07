@@ -36,6 +36,7 @@ public class Controller {
 	
 	private ObservableList<Song> obsList;
 	private ArrayList<Song> songs=new ArrayList<Song>();
+	
 	public void processButton(ActionEvent e){
 		
 	}
