@@ -1,10 +1,12 @@
 package application;
 	
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import structures.Song;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 
 /**
  * test message
@@ -16,13 +18,20 @@ public class SongLib extends Application {
 	public void start(Stage primaryStage) {
 		
 		try {
-			BorderPane root = new BorderPane();
-			Scene scene = new Scene(root,400,400);
+			
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("/view/Song.fxml"));
+			GridPane root = (GridPane) loader.load();
+			
+			
+			Scene scene = new Scene(root,500,500);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setResizable(false);
+			primaryStage.setResizable(true);
 			primaryStage.setTitle("Song Library");
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
