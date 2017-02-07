@@ -40,7 +40,7 @@
       <TextField fx:id="artistInput" GridPane.columnIndex="2" GridPane.rowIndex="7" />
       <TextField fx:id="albumInput" GridPane.columnIndex="2" GridPane.rowIndex="8" />
       <TextField fx:id="yearInput" GridPane.columnIndex="2" GridPane.rowIndex="9" />
-      <ListView minHeight="-Infinity" minWidth="-Infinity" prefHeight="221.0" prefWidth="100.0" GridPane.rowIndex="4" />
+      <ListView fx:id="listView" minHeight="-Infinity" minWidth="-Infinity" prefHeight="221.0" prefWidth="100.0" GridPane.rowIndex="4" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Song Title:" textAlignment="RIGHT" wrappingWidth="97.13671875" GridPane.columnIndex="2" GridPane.rowIndex="1" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Song Artist:" textAlignment="RIGHT" wrappingWidth="99.13671875" GridPane.columnIndex="2" GridPane.rowIndex="2" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Song Album:" textAlignment="RIGHT" wrappingWidth="96.666015625" GridPane.columnIndex="2" GridPane.rowIndex="3" />

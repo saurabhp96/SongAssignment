@@ -3,6 +3,7 @@ package view;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,11 +40,13 @@ public class Controller {
 	
 	public void processButton(ActionEvent e){
 		
+		
 	}
 	
 	public void createList(Stage stage) throws FileNotFoundException{
 		
 		getSongsFromFile(songs);
+		Collections.sort(songs);
 		obsList=FXCollections.observableArrayList(songs);
 		listView.setItems(obsList);
 		
