@@ -41,6 +41,59 @@ public class Controller {
 	private ArrayList<Song> songs=new ArrayList<Song>();
 	
 	public void processButton(ActionEvent e){
+		Button b = (Button) e.getSource();
+		if (b == addSongButton)
+		{
+			String title = titleInput.getText();
+			String artist = artistInput.getText();
+			String album = albumInput.getText();
+			if (album.isEmpty())
+			{
+				album = " ";
+			}
+			int year = -1;
+			String yearString = yearInput.getText();
+			if (! yearString.isEmpty())
+			{
+				year = Integer.valueOf(yearString);
+			}
+			
+			Song song = new Song(title, artist, album, year);
+			
+			//update file
+			
+			//update song display
+			
+			//make the inserted song selected
+			
+			//display its details
+			TitleOutput.setText(title);
+			ArtistOutput.setText(artist);
+			if (!album.isEmpty())
+			{
+				AlbumOutput.setText(album);
+			}
+			if (!yearString.isEmpty())
+			{
+				YearOutput.setText(String.format("d", yearString));
+				//test this
+			}
+			
+		}
+		else if (b == editSongButton)
+		{
+			//only do anything if a song is selected from the list
+			//then, populate edit text fields with song info
+			
+		}
+		else if (b == deleteSongButton)
+		{
+			//only do anything if a song is selected from the list
+			//then, pop up a confirm dialog
+			//on confirm, delete the song from the file, and from the song display list
+			
+		}
+		
 		
 		
 	}
