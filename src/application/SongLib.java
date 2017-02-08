@@ -1,5 +1,7 @@
 package application;
 	
+import java.io.FileNotFoundException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -15,6 +17,7 @@ import javafx.scene.layout.GridPane;
  *
  */
 public class SongLib extends Application {
+	Controller controller;
 	@Override
 	public void start(Stage primaryStage) {
 		
@@ -25,7 +28,7 @@ public class SongLib extends Application {
 			GridPane root=(GridPane)loader.load();
 			primaryStage.setResizable(false);
 			Scene scene = new Scene(root,500,500);
-			Controller controller=loader.getController();
+			controller=loader.getController();
 			controller.createList(primaryStage);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setTitle("Song Library");
@@ -34,6 +37,15 @@ public class SongLib extends Application {
 			
 			
 		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void stop(){
+		try {
+			controller.writeSongsIntoFile();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

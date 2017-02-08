@@ -2,6 +2,8 @@ package view;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -58,32 +60,51 @@ public class Controller {
 
 	public void showSongDetails(Stage stage) {
 		// TODO Auto-generated method stub
-		
+		int index=listView.getSelectionModel().getSelectedIndex();
+		Song selectedSong=songs.get(index);
+		TitleOutput.setText(selectedSong.getTitle());
+		ArtistOutput.setText(selectedSong.getArtist());
+		AlbumOutput.setText(selectedSong.getAlbum());
+		YearOutput.setText(selectedSong.getYear()!=-1?selectedSong.getYear()+"":"");
 	}
 
+	/**
+	 * 
+	 * @param songs The list to populate the songs into
+	 * @throws FileNotFoundException
+	 */
 	private void getSongsFromFile(ArrayList<Song> songs) throws FileNotFoundException {
 		// TODO Auto-generated method stub
 		File file= new File("SongList.txt");
 		Scanner sc=new Scanner(file);
-		
 		while(sc.hasNextLine()){
 			String line=sc.nextLine();
 			Scanner lineScan=new Scanner(line);
+			lineScan.useDelimiter(";");
 			String songTitle=lineScan.next();
 			String songArtist=lineScan.next();
 			String songAlbum=lineScan.next();
 			int songYear=Integer.parseInt(lineScan.next());
 			
-			Song s=new Song(songTitle,songArtist);
-			if(!songAlbum.equals(" "))
-				s.setAlbum(songAlbum);
-			if(songYear!=-1){
-				s.setYear(songYear);
-			}
+			Song s=new Song(songTitle,songArtist,songAlbum,songYear);
 			
 			songs.add(s);
 		}
 		
 	}
+	
+	public void writeSongsIntoFile() throws FileNotFoundException{
+		File file=new File("SongList.txt");
+		
+		PrintWriter writer=new PrintWriter(file);
+		
+		for(Song s:songs){
+			writer.println(s.getTitle()+";"+s.getArtist()+";"+s.getAlbum()+";"+s.getYear()+";");
+		}
+		
+		writer.close();
+		
+	}
+	
 
 }
