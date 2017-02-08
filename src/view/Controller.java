@@ -83,6 +83,7 @@ public class Controller {
 		else if (b == editSongButton)
 		{
 			//only do anything if a song is selected from the list
+			
 			//then, populate edit text fields with song info
 			
 		}
@@ -93,8 +94,6 @@ public class Controller {
 			//on confirm, delete the song from the file, and from the song display list
 			
 		}
-		
-		
 		
 	}
 	
