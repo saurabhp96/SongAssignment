@@ -1,2 +1,2 @@
-Hello Adele 25 2015
-Starboy The-Weeknd Starboy 2016
+Hello;Adele;25;2015;
+Starboy;The Weeknd;Starboy;2016;
