@@ -29,7 +29,8 @@ public class SongLib extends Application {
 			primaryStage.setResizable(false);
 			Scene scene = new Scene(root,500,500);
 			controller=loader.getController();
-			controller.createList(primaryStage);
+			controller.createList();
+			controller.setStage(primaryStage);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setTitle("Song Library");
 			primaryStage.setScene(scene);

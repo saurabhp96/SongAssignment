@@ -38,7 +38,7 @@ public class Controller {
 	@FXML Text YearOutput;
 	
 	private ObservableList<Song> obsList;
-	private ArrayList<Song> songs=new ArrayList<Song>();
+	private Stage stage;
 	
 	public void processButton(ActionEvent e){
 		Button b = (Button) e.getSource();
@@ -97,23 +97,23 @@ public class Controller {
 		
 	}
 	
-	public void createList(Stage stage) throws FileNotFoundException{
+	public void createList() throws FileNotFoundException{
 		
-		getSongsFromFile(songs);
-		Collections.sort(songs);
-		obsList=FXCollections.observableArrayList(songs);
+		obsList=FXCollections.observableArrayList();
+		getSongsFromFile(obsList);
+		Collections.sort(obsList);
 		listView.setItems(obsList);
 		
 		if (!obsList.isEmpty())
 			listView.getSelectionModel().select(0);
 		listView.getSelectionModel().selectedIndexProperty()
-				.addListener((obs, oldVal, newVal) -> showSongDetails(stage));
+				.addListener((obs, oldVal, newVal) -> showSongDetails());
 	}
 
-	public void showSongDetails(Stage stage) {
+	public void showSongDetails() {
 		// TODO Auto-generated method stub
 		int index=listView.getSelectionModel().getSelectedIndex();
-		Song selectedSong=songs.get(index);
+		Song selectedSong=obsList.get(index);
 		TitleOutput.setText(selectedSong.getTitle());
 		ArtistOutput.setText(selectedSong.getArtist());
 		AlbumOutput.setText(selectedSong.getAlbum());
@@ -122,10 +122,10 @@ public class Controller {
 
 	/**
 	 * 
-	 * @param songs The list to populate the songs into
+	 * @param list The list to populate the songs into
 	 * @throws FileNotFoundException
 	 */
-	private void getSongsFromFile(ArrayList<Song> songs) throws FileNotFoundException {
+	private void getSongsFromFile(ObservableList<Song> list) throws FileNotFoundException {
 		// TODO Auto-generated method stub
 		File file= new File("SongList.txt");
 		Scanner sc=new Scanner(file);
@@ -140,7 +140,7 @@ public class Controller {
 			
 			Song s=new Song(songTitle,songArtist,songAlbum,songYear);
 			
-			songs.add(s);
+			list.add(s);
 		}
 		
 	}
@@ -150,12 +150,17 @@ public class Controller {
 		
 		PrintWriter writer=new PrintWriter(file);
 		
-		for(Song s:songs){
+		for(Song s:obsList){
 			writer.println(s.getTitle()+";"+s.getArtist()+";"+s.getAlbum()+";"+s.getYear()+";");
 		}
 		
 		writer.close();
 		
+	}
+
+	public void setStage(Stage primaryStage) {
+		// TODO Auto-generated method stub
+		stage=primaryStage;
 	}
 	
 
