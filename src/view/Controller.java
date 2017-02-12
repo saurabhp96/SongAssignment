@@ -111,10 +111,6 @@ public class Controller {
 			obsList.add(song);
 			Collections.sort(obsList);
 			
-			//update file
-			//this might throw a FileNotFoundException
-			//delete contents of file, then writeSongsIntoFile?? inefficient but could work
-			
 			//update song display
 			listView.setItems(obsList);
 			
@@ -207,8 +203,12 @@ public class Controller {
 			selectedSong.setAlbum(album);
 			selectedSong.setYear(year);
 			
-			//save changes to the file
-			//delete contents of file, then writeSongsIntoFile?? inefficient but could work
+			//sort the song list
+			Collections.sort(obsList);
+			
+			//update song display
+			listView.setItems(obsList);
+			
 			
 		}
 		else if (b == deleteSongButton)
@@ -232,9 +232,6 @@ public class Controller {
 			if (result.get() == ButtonType.OK){
 			    // ... user chose OK
 				obsList.remove(index);
-	
-				//update file
-				//delete contents of file, then writeSongsIntoFile?? inefficient but could work
 				
 			} else {
 			    // ... user chose CANCEL or closed the dialog
