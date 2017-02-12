@@ -44,10 +44,24 @@ public class Controller {
 	
 	public void processButton(ActionEvent e)  throws FileNotFoundException {
 		Button b = (Button) e.getSource();
+		
 		if (b == addSongButton)
 		{
 			String title = titleInput.getText();
 			String artist = artistInput.getText();
+			
+			//check if title and/or artist are empty
+			if (title.isEmpty() || artist.isEmpty())
+			{
+				//dialog
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Error");
+				alert.setHeaderText("Can't add this song.");
+				alert.setContentText("You need to fill in the artist and title of the song!");
+				alert.showAndWait();
+				return;
+			}
+			
 			String album = albumInput.getText();
 			if (album.isEmpty())
 			{
@@ -61,6 +75,37 @@ public class Controller {
 			}
 			
 			Song song = new Song(title, artist, album, year);
+			
+			//check to make sure this song doesn't already exist
+			for (Song s:obsList)
+			{
+				if (song.equals(s))
+				{
+					// dialog
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Error in song addition");
+					alert.setHeaderText("Can't add this song.");
+					alert.setContentText("You already have a song with this title and artist!");
+					alert.showAndWait();
+					return;
+				}
+			}
+			
+			//if the song doesn't already exist, ask if user is sure they want to add it
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Confirm Song Addition");
+			//alert.setHeaderText("Look, a Confirmation Dialog");
+			alert.setContentText("Are you sure you want to add this song?");
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK){
+			    // ... user chose OK
+				//just continue with the code
+				
+			} else {
+			    // ... user chose CANCEL or closed the dialog
+				return;
+			}
+			
 			
 			//update songlist, sort the songlist
 			obsList.add(song);
@@ -105,12 +150,55 @@ public class Controller {
 			//get values of input fields
 			String title = titleInput.getText();
 			String artist = artistInput.getText();
+			
+			//check that the artist and/or title are not empty
+			if (title.isEmpty() || artist.isEmpty())
+			{
+				//dialog
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Error");
+				alert.setHeaderText("Can't edit this song.");
+				alert.setContentText("You need to fill in the artist and title of the song!");
+				alert.showAndWait();
+				return;
+			}
+			
+			//check that the artist and/or title don't already exist
+			for (Song s:obsList)
+			{
+				if (selectedSong.equals(s))
+				{
+					// dialog
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Error in song addition");
+					alert.setHeaderText("Can't add this song.");
+					alert.setContentText("You already have a song with this title and artist!");
+					alert.showAndWait();
+					return;
+				}
+			}
+			
 			String album = albumInput.getText();
 			String yearString = yearInput.getText();
 			int year = -1;
 			if (! yearString.isEmpty())
 			{
 				year = Integer.valueOf(yearString);
+			}
+			
+			//ask if user is sure they want to make these changes
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Confirm Song Edit");
+			//alert.setHeaderText("Look, a Confirmation Dialog");
+			alert.setContentText("Are you sure you want to edit this song?");
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK){
+			    // ... user chose OK
+				//just continue with the code
+				
+			} else {
+			    // ... user chose CANCEL or closed the dialog
+				return;
 			}
 			
 			//save input fields to Song
@@ -135,27 +223,23 @@ public class Controller {
 			
 			Song selectedSong=obsList.get(index);
 			
-			//confirmation dialog
+			//ask if user is sure they want to delete this song
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Confirm Song Deletion");
 			//alert.setHeaderText("Look, a Confirmation Dialog");
 			alert.setContentText("Are you sure you want to delete this song?");
-
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK){
 			    // ... user chose OK
 				obsList.remove(index);
-				
+	
 				//update file
 				//delete contents of file, then writeSongsIntoFile?? inefficient but could work
 				
 			} else {
 			    // ... user chose CANCEL or closed the dialog
+				return;
 			}
-			
-			
-			
-			
 			
 		}
 		
