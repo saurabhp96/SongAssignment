@@ -160,9 +160,21 @@ public class Controller {
 			}
 			
 			//check that the artist and/or title don't already exist
+			ArrayList<Integer> matchIndexes = new ArrayList<Integer>();
 			for (Song s:obsList)
 			{
 				if (selectedSong.equals(s))
+				{
+					matchIndexes.add(obsList.indexOf(s));
+					//if there is a song that matches the title and artist you are looking to add,
+					//put the index of that song in the arraylist
+				}
+			}
+			//if the arraylist contains an index that is not equal to the index of the song currently being
+			//edited, you have a duplicate.
+			for (Integer i : matchIndexes)
+			{
+				if (i != index)
 				{
 					// dialog
 					Alert alert = new Alert(AlertType.INFORMATION);
