@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Scanner;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -40,7 +42,7 @@ public class Controller {
 	private ObservableList<Song> obsList;
 	private Stage stage;
 	
-	public void processButton(ActionEvent e){
+	public void processButton(ActionEvent e)  throws FileNotFoundException {
 		Button b = (Button) e.getSource();
 		if (b == addSongButton)
 		{
@@ -60,11 +62,19 @@ public class Controller {
 			
 			Song song = new Song(title, artist, album, year);
 			
+			//update songlist, sort the songlist
+			obsList.add(song);
+			Collections.sort(obsList);
+			
 			//update file
+			//this might throw a FileNotFoundException
+			//delete contents of file, then writeSongsIntoFile?? inefficient but could work
 			
 			//update song display
+			listView.setItems(obsList);
 			
 			//make the inserted song selected
+			//listView.getSelectionModel.select(what do i put here);
 			
 			//display its details
 			TitleOutput.setText(title);
@@ -82,9 +92,35 @@ public class Controller {
 		}
 		else if (b == editSongButton)
 		{
-			//only do anything if a song is selected from the list
+			//to edit a song, select a song from the list
+			//the fields should populate with its existing information
+			//make your changes, then click edit and the changes should save
 			
-			//then, populate edit text fields with song info
+			int index=listView.getSelectionModel().getSelectedIndex();
+			if (index == -1)
+				return;
+			
+			Song selectedSong=obsList.get(index);
+			
+			//get values of input fields
+			String title = titleInput.getText();
+			String artist = artistInput.getText();
+			String album = albumInput.getText();
+			String yearString = yearInput.getText();
+			int year = -1;
+			if (! yearString.isEmpty())
+			{
+				year = Integer.valueOf(yearString);
+			}
+			
+			//save input fields to Song
+			selectedSong.setTitle(title);
+			selectedSong.setArtist(artist);
+			selectedSong.setAlbum(album);
+			selectedSong.setYear(year);
+			
+			//save changes to the file
+			//delete contents of file, then writeSongsIntoFile?? inefficient but could work
 			
 		}
 		else if (b == deleteSongButton)
@@ -92,6 +128,34 @@ public class Controller {
 			//only do anything if a song is selected from the list
 			//then, pop up a confirm dialog
 			//on confirm, delete the song from the file, and from the song display list
+			
+			int index=listView.getSelectionModel().getSelectedIndex();
+			if (index == -1)
+				return;
+			
+			Song selectedSong=obsList.get(index);
+			
+			//confirmation dialog
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Confirm Song Deletion");
+			//alert.setHeaderText("Look, a Confirmation Dialog");
+			alert.setContentText("Are you sure you want to delete this song?");
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK){
+			    // ... user chose OK
+				obsList.remove(index);
+				
+				//update file
+				//delete contents of file, then writeSongsIntoFile?? inefficient but could work
+				
+			} else {
+			    // ... user chose CANCEL or closed the dialog
+			}
+			
+			
+			
+			
 			
 		}
 		
