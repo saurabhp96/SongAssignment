@@ -275,6 +275,12 @@ public class Controller {
 		ArtistOutput.setText(selectedSong.getArtist());
 		AlbumOutput.setText(selectedSong.getAlbum());
 		YearOutput.setText(selectedSong.getYear()!=-1?selectedSong.getYear()+"":"");
+		
+		//populate edit text fields when a song is selected
+		titleInput.setText(selectedSong.getTitle());
+		artistInput.setText(selectedSong.getArtist());
+		albumInput.setText(selectedSong.getAlbum());
+		yearInput.setText(selectedSong.getYear()!=-1?selectedSong.getYear()+"":"");
 	}
 
 	/**
