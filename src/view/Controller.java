@@ -44,16 +44,14 @@ public class Controller {
 	
 	public void processButton(ActionEvent e)  throws FileNotFoundException {
 		Button b = (Button) e.getSource();
-		
-		if (b == addSongButton)
-		{
+
+		if (b == addSongButton) {
 			String title = titleInput.getText();
 			String artist = artistInput.getText();
-			
-			//check if title and/or artist are empty
-			if (title.isEmpty() || artist.isEmpty())
-			{
-				//dialog
+
+			// check if title and/or artist are empty
+			if (title.isEmpty() || artist.isEmpty()) {
+				// dialog
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Error");
 				alert.setHeaderText("Can't add this song.");
@@ -61,74 +59,50 @@ public class Controller {
 				alert.showAndWait();
 				return;
 			}
-			
+
 			String album = albumInput.getText();
-			if (album.isEmpty())
-			{
+			if (album.isEmpty()) {
 				album = " ";
 			}
 			int year = -1;
 			String yearString = yearInput.getText();
-			if (! yearString.isEmpty())
-			{
+			if (!yearString.isEmpty()) {
 				year = Integer.valueOf(yearString);
 			}
-			
+
 			Song song = new Song(title, artist, album, year);
-			
-			//check to make sure this song doesn't already exist
-			for (Song s:obsList)
-			{
-				if (song.equals(s))
-				{
-					// dialog
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Error in song addition");
-					alert.setHeaderText("Can't add this song.");
-					alert.setContentText("You already have a song with this title and artist!");
-					alert.showAndWait();
-					return;
-				}
-			}
-			
-			//if the song doesn't already exist, ask if user is sure they want to add it
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Confirm Song Addition");
-			//alert.setHeaderText("Look, a Confirmation Dialog");
-			alert.setContentText("Are you sure you want to add this song?");
-			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == ButtonType.OK){
-			    // ... user chose OK
-				//just continue with the code
-				
-			} else {
-			    // ... user chose CANCEL or closed the dialog
+
+			// check to make sure this song doesn't already exist
+			if (obsList.contains(song)) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.initOwner(stage);
+				alert.setTitle("Error in song addition");
+				alert.setHeaderText("Can't add this song.");
+				alert.setContentText("You already have a song with this title and artist!");
+				alert.showAndWait();
 				return;
 			}
-			
-			
-			//update songlist, sort the songlist
-			obsList.add(song);
-			Collections.sort(obsList);
-			
-			//update song display
-			listView.setItems(obsList);
-			
-			//make the inserted song selected
-			//listView.getSelectionModel.select(what do i put here);
-			
-			//display its details
-			TitleOutput.setText(title);
-			ArtistOutput.setText(artist);
-			if (!album.isEmpty())
-			{
-				AlbumOutput.setText(album);
+
+			// if the song doesn't already exist, ask if user is sure they want
+			// to add it
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.initOwner(stage);
+			alert.setTitle("Confirm Song Addition");
+			alert.setContentText("Are you sure you want to add this song?");
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() != ButtonType.OK) {
+				return;
 			}
-			if (!yearString.isEmpty())
-			{
-				YearOutput.setText(String.format("d", yearString));
-				//test this
-			}
+
+			int index = 0;
+
+			while (index < obsList.size() && obsList.get(index).compareTo(song) < 0)
+				index++;
+
+			obsList.add(index, song);
+
+			listView.getSelectionModel().select(index);
+			this.showSongDetails();
 			
 		}
 		else if (b == editSongButton)
@@ -138,20 +112,28 @@ public class Controller {
 			//make your changes, then click edit and the changes should save
 			
 			int index=listView.getSelectionModel().getSelectedIndex();
-			if (index == -1)
+			if (index == -1){
+				Alert alert=new Alert(AlertType.ERROR);
+				alert.initOwner(stage);
+				alert.setTitle("Error");
+				alert.setHeaderText("Can't edit song.");
+				alert.setContentText("No song is selected");
+				alert.showAndWait();
 				return;
+			}
 			
 			Song selectedSong=obsList.get(index);
-			
 			//get values of input fields
 			String title = titleInput.getText();
 			String artist = artistInput.getText();
+			String album=albumInput.getText();
+			String year=yearInput.getText();
 			
 			//check that the artist and/or title are not empty
 			if (title.isEmpty() || artist.isEmpty())
 			{
 				//dialog
-				Alert alert = new Alert(AlertType.INFORMATION);
+				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Error");
 				alert.setHeaderText("Can't edit this song.");
 				alert.setContentText("You need to fill in the artist and title of the song!");
@@ -159,68 +141,58 @@ public class Controller {
 				return;
 			}
 			
-			//check that the artist and/or title don't already exist
-			ArrayList<Integer> matchIndexes = new ArrayList<Integer>();
-			for (Song s:obsList)
-			{
-				if (selectedSong.equals(s))
-				{
-					matchIndexes.add(obsList.indexOf(s));
-					//if there is a song that matches the title and artist you are looking to add,
-					//put the index of that song in the arraylist
-				}
+			Song edittedSong=new Song(title,artist);
+			
+			if(obsList.contains(edittedSong)&&!edittedSong.equals(selectedSong)){
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.initOwner(stage);
+				alert.setTitle("Error in song addition");
+				alert.setHeaderText("Can't add this song.");
+				alert.setContentText("You already have a song with this title and artist!");
+				alert.showAndWait();
+				return;
 			}
-			//if the arraylist contains an index that is not equal to the index of the song currently being
-			//edited, you have a duplicate.
-			for (Integer i : matchIndexes)
-			{
-				if (i != index)
-				{
-					// dialog
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Error in song addition");
-					alert.setHeaderText("Can't add this song.");
-					alert.setContentText("You already have a song with this title and artist!");
-					alert.showAndWait();
+			
+			//confirmation
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.initOwner(stage);
+			alert.setTitle("Confirm Song Edit");
+			alert.setContentText("Are you sure you want to edit this song?");
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() != ButtonType.OK) {
+				return;
+			}
+			
+			//edit song
+			Song s=obsList.remove(index);
+			s.setTitle(title);
+			s.setArtist(artist);
+			s.setAlbum(album);
+			if(!year.isEmpty()){
+				try {
+					s.setYear(Integer.parseInt(year));
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					Alert alert2 = new Alert(AlertType.ERROR);
+					alert2.initOwner(stage);
+					alert2.setTitle("Error in song edit");
+					alert2.setHeaderText("Can't edit this song.");
+					alert2.setContentText("Not a number in year");
+					alert2.showAndWait();
 					return;
 				}
 			}
 			
-			String album = albumInput.getText();
-			String yearString = yearInput.getText();
-			int year = -1;
-			if (! yearString.isEmpty())
-			{
-				year = Integer.valueOf(yearString);
-			}
-			
-			//ask if user is sure they want to make these changes
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Confirm Song Edit");
-			//alert.setHeaderText("Look, a Confirmation Dialog");
-			alert.setContentText("Are you sure you want to edit this song?");
-			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == ButtonType.OK){
-			    // ... user chose OK
-				//just continue with the code
-				
-			} else {
-			    // ... user chose CANCEL or closed the dialog
-				return;
-			}
-			
-			//save input fields to Song
-			selectedSong.setTitle(title);
-			selectedSong.setArtist(artist);
-			selectedSong.setAlbum(album);
-			selectedSong.setYear(year);
-			
-			//sort the song list
-			Collections.sort(obsList);
-			
-			//update song display
-			listView.setItems(obsList);
-			
+			//insert editted song into list
+			int i = 0;
+
+			while (i < obsList.size() && obsList.get(i).compareTo(s) < 0)
+				index++;
+
+			obsList.add(index, s);
+
+			listView.getSelectionModel().select(i);
+			this.showSongDetails();
 			
 		}
 		else if (b == deleteSongButton)
@@ -230,8 +202,15 @@ public class Controller {
 			//on confirm, delete the song from the file, and from the song display list
 			
 			int index=listView.getSelectionModel().getSelectedIndex();
-			if (index == -1)
+			if (index == -1){
+				Alert alert=new Alert(AlertType.ERROR);
+				alert.initOwner(stage);
+				alert.setTitle("Error");
+				alert.setHeaderText("Can't delete song.");
+				alert.setContentText("No song is selected");
+				alert.showAndWait();
 				return;
+			}
 			
 			Song selectedSong=obsList.get(index);
 			
@@ -261,26 +240,31 @@ public class Controller {
 		Collections.sort(obsList);
 		listView.setItems(obsList);
 		
-		if (!obsList.isEmpty())
-			listView.getSelectionModel().select(0);
+		
 		listView.getSelectionModel().selectedIndexProperty()
 				.addListener((obs, oldVal, newVal) -> showSongDetails());
+		if (!obsList.isEmpty()) {
+			listView.getSelectionModel().select(0);
+			this.showSongDetails();
+		}
 	}
 
 	public void showSongDetails() {
 		// TODO Auto-generated method stub
 		int index=listView.getSelectionModel().getSelectedIndex();
-		Song selectedSong=obsList.get(index);
-		TitleOutput.setText(selectedSong.getTitle());
-		ArtistOutput.setText(selectedSong.getArtist());
-		AlbumOutput.setText(selectedSong.getAlbum());
-		YearOutput.setText(selectedSong.getYear()!=-1?selectedSong.getYear()+"":"");
-		
-		//populate edit text fields when a song is selected
-		titleInput.setText(selectedSong.getTitle());
-		artistInput.setText(selectedSong.getArtist());
-		albumInput.setText(selectedSong.getAlbum());
-		yearInput.setText(selectedSong.getYear()!=-1?selectedSong.getYear()+"":"");
+		if (index != -1) {
+			Song selectedSong = obsList.get(index);
+			TitleOutput.setText(selectedSong.getTitle());
+			ArtistOutput.setText(selectedSong.getArtist());
+			AlbumOutput.setText(selectedSong.getAlbum());
+			YearOutput.setText(selectedSong.getYear() != -1 ? selectedSong.getYear() + "" : "");
+
+			// populate edit text fields when a song is selected
+			titleInput.setPromptText(selectedSong.getTitle());
+			artistInput.setPromptText(selectedSong.getArtist());
+			albumInput.setPromptText(selectedSong.getAlbum());
+			yearInput.setPromptText(selectedSong.getYear() != -1 ? selectedSong.getYear() + "" : "");
+		}
 	}
 
 	/**

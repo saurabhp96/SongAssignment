@@ -45,9 +45,9 @@
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Song Artist:" textAlignment="RIGHT" wrappingWidth="99.13671875" GridPane.columnIndex="3" GridPane.rowIndex="2" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Song Album:" textAlignment="RIGHT" wrappingWidth="96.666015625" GridPane.columnIndex="3" GridPane.rowIndex="3" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Song Year:" textAlignment="RIGHT" wrappingWidth="94.13671875" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-      <Text fx:id="TitleOutput" strokeType="OUTSIDE" strokeWidth="0.0" text="" wrappingWidth="93.13671875" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-      <Text fx:id="ArtistOutput" strokeType="OUTSIDE" strokeWidth="0.0" text="" wrappingWidth="97.13671875" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-      <Text fx:id="AlbumOutput" strokeType="OUTSIDE" strokeWidth="0.0" text="" wrappingWidth="92.13671875" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-      <Text fx:id="YearOutput" strokeType="OUTSIDE" strokeWidth="0.0" text="" wrappingWidth="92.13671875" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+      <Text fx:id="TitleOutput" strokeType="OUTSIDE" strokeWidth="0.0" text="" wrappingWidth="93.13671875" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+      <Text fx:id="ArtistOutput" strokeType="OUTSIDE" strokeWidth="0.0" text="" wrappingWidth="97.13671875" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+      <Text fx:id="AlbumOutput" strokeType="OUTSIDE" strokeWidth="0.0" text="" wrappingWidth="92.13671875" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+      <Text fx:id="YearOutput" strokeType="OUTSIDE" strokeWidth="0.0" text="" wrappingWidth="92.13671875" GridPane.columnIndex="4" GridPane.rowIndex="4" />
    </children>
 </GridPane>
