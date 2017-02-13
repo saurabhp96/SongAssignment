@@ -46,8 +46,8 @@ public class Controller {
 		Button b = (Button) e.getSource();
 
 		if (b == addSongButton) {
-			String title = titleInput.getText();
-			String artist = artistInput.getText();
+			String title = titleInput.getText().trim();
+			String artist = artistInput.getText().trim();
 
 			// check if title and/or artist are empty
 			if (title.isEmpty() || artist.isEmpty()) {
@@ -60,12 +60,12 @@ public class Controller {
 				return;
 			}
 
-			String album = albumInput.getText();
+			String album = albumInput.getText().trim();
 			if (album.isEmpty()) {
 				album = " ";
 			}
 			int year = -1;
-			String yearString = yearInput.getText();
+			String yearString = yearInput.getText().trim();
 			if (!yearString.isEmpty()) {
 				year = Integer.valueOf(yearString);
 			}
@@ -107,9 +107,6 @@ public class Controller {
 		}
 		else if (b == editSongButton)
 		{
-			//to edit a song, select a song from the list
-			//the fields should populate with its existing information
-			//make your changes, then click edit and the changes should save
 			
 			int index=listView.getSelectionModel().getSelectedIndex();
 			if (index == -1){
@@ -124,10 +121,10 @@ public class Controller {
 			
 			Song selectedSong=obsList.get(index);
 			//get values of input fields
-			String title = titleInput.getText();
-			String artist = artistInput.getText();
-			String album=albumInput.getText();
-			String year=yearInput.getText();
+			String title = titleInput.getText().trim();
+			String artist = artistInput.getText().trim();
+			String album=albumInput.getText().trim();
+			String year=yearInput.getText().trim();
 			
 			//check that the artist and/or title are not empty
 			if (title.isEmpty() || artist.isEmpty())
@@ -146,13 +143,27 @@ public class Controller {
 			if(obsList.contains(edittedSong)&&!edittedSong.equals(selectedSong)){
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.initOwner(stage);
-				alert.setTitle("Error in song addition");
-				alert.setHeaderText("Can't add this song.");
+				alert.setTitle("Error in song edit");
+				alert.setHeaderText("Can't edit this song.");
 				alert.setContentText("You already have a song with this title and artist!");
 				alert.showAndWait();
 				return;
 			}
 			
+			if(!year.isEmpty()){
+				try {
+					Integer.parseInt(year);
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					Alert alert2 = new Alert(AlertType.ERROR);
+					alert2.initOwner(stage);
+					alert2.setTitle("Error in song edit");
+					alert2.setHeaderText("Can't edit this song.");
+					alert2.setContentText("Not a number in year");
+					alert2.showAndWait();
+					return;
+				}
+			}
 			//confirmation
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.initOwner(stage);
@@ -168,28 +179,15 @@ public class Controller {
 			s.setTitle(title);
 			s.setArtist(artist);
 			s.setAlbum(album);
-			if(!year.isEmpty()){
-				try {
-					s.setYear(Integer.parseInt(year));
-				} catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
-					Alert alert2 = new Alert(AlertType.ERROR);
-					alert2.initOwner(stage);
-					alert2.setTitle("Error in song edit");
-					alert2.setHeaderText("Can't edit this song.");
-					alert2.setContentText("Not a number in year");
-					alert2.showAndWait();
-					return;
-				}
-			}
+			s.setYear(Integer.parseInt(year));
 			
 			//insert editted song into list
 			int i = 0;
 
 			while (i < obsList.size() && obsList.get(i).compareTo(s) < 0)
-				index++;
+				i++;
 
-			obsList.add(index, s);
+			obsList.add(i, s);
 
 			listView.getSelectionModel().select(i);
 			this.showSongDetails();
@@ -214,18 +212,30 @@ public class Controller {
 			
 			Song selectedSong=obsList.get(index);
 			
-			//ask if user is sure they want to delete this song
+			// ask if user is sure they want to delete this song
 			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.initOwner(stage);
 			alert.setTitle("Confirm Song Deletion");
-			//alert.setHeaderText("Look, a Confirmation Dialog");
 			alert.setContentText("Are you sure you want to delete this song?");
 			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == ButtonType.OK){
-			    // ... user chose OK
+			if (result.get() == ButtonType.OK) {
+				// ... user chose OK
 				obsList.remove(index);
-				
+				if (obsList.isEmpty()) {
+					TitleOutput.setText("");
+					ArtistOutput.setText("");
+					AlbumOutput.setText("");
+					YearOutput.setText("");
+				} else if (index >= obsList.size()) {
+					listView.getSelectionModel().select(index - 1);
+					this.showSongDetails();
+				} else {
+					listView.getSelectionModel().select(index);
+					this.showSongDetails();
+				}
+
 			} else {
-			    // ... user chose CANCEL or closed the dialog
+				// ... user chose CANCEL or closed the dialog
 				return;
 			}
 			
@@ -260,10 +270,10 @@ public class Controller {
 			YearOutput.setText(selectedSong.getYear() != -1 ? selectedSong.getYear() + "" : "");
 
 			// populate edit text fields when a song is selected
-			titleInput.setPromptText(selectedSong.getTitle());
-			artistInput.setPromptText(selectedSong.getArtist());
-			albumInput.setPromptText(selectedSong.getAlbum());
-			yearInput.setPromptText(selectedSong.getYear() != -1 ? selectedSong.getYear() + "" : "");
+			titleInput.setText(selectedSong.getTitle());
+			artistInput.setText(selectedSong.getArtist());
+			albumInput.setText(selectedSong.getAlbum());
+			yearInput.setText(selectedSong.getYear() != -1 ? selectedSong.getYear() + "" : "");
 		}
 	}
 
