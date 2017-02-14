@@ -55,7 +55,7 @@ public class Controller {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Error");
 				alert.setHeaderText("Can't add this song.");
-				alert.setContentText("You need to fill in the artist and title of the song!");
+				alert.setContentText("You need to fill in the title and artist of the song!");
 				alert.showAndWait();
 				return;
 			}
