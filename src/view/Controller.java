@@ -34,10 +34,10 @@ public class Controller {
 	@FXML TextField artistInput;
 	@FXML TextField albumInput;
 	@FXML TextField yearInput;
-	@FXML Text TitleOutput;
-	@FXML Text ArtistOutput;
-	@FXML Text AlbumOutput;
-	@FXML Text YearOutput;
+	@FXML TextField TitleOutput;
+	@FXML TextField ArtistOutput;
+	@FXML TextField AlbumOutput;
+	@FXML TextField YearOutput;
 	
 	private ObservableList<Song> obsList;
 	private Stage stage;
@@ -152,7 +152,17 @@ public class Controller {
 			
 			if(!year.isEmpty()){
 				try {
-					Integer.parseInt(year);
+					int y=Integer.parseInt(year);
+					if(y < 0)
+					{
+						Alert alert2 = new Alert(AlertType.ERROR);
+						alert2.initOwner(stage);
+						alert2.setTitle("Error in song edit");
+						alert2.setHeaderText("Can't edit this song.");
+						alert2.setContentText("Not a valid year");
+						alert2.showAndWait();
+						return;	
+					}
 				} catch (NumberFormatException e1) {
 					// TODO Auto-generated catch block
 					Alert alert2 = new Alert(AlertType.ERROR);
@@ -163,7 +173,9 @@ public class Controller {
 					alert2.showAndWait();
 					return;
 				}
+				
 			}
+			
 			//confirmation
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.initOwner(stage);
@@ -179,7 +191,14 @@ public class Controller {
 			s.setTitle(title);
 			s.setArtist(artist);
 			s.setAlbum(album);
-			s.setYear(Integer.parseInt(year));
+			if (year.isEmpty())
+			{
+				s.setYear(-1);
+			}
+			else		
+			{
+				s.setYear(Integer.parseInt(year));
+			}
 			
 			//insert editted song into list
 			int i = 0;

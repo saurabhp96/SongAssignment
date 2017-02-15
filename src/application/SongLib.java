@@ -27,7 +27,7 @@ public class SongLib extends Application {
 			loader.setLocation(getClass().getResource("/view/Song.fxml"));
 			GridPane root=(GridPane)loader.load();
 			primaryStage.setResizable(false);
-			Scene scene = new Scene(root,500,300);
+			Scene scene = new Scene(root,650,350);
 			controller=loader.getController();
 			controller.createList();
 			controller.setStage(primaryStage);
