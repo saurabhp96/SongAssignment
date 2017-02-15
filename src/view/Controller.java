@@ -67,7 +67,27 @@ public class Controller {
 			int year = -1;
 			String yearString = yearInput.getText().trim();
 			if (!yearString.isEmpty()) {
-				year = Integer.valueOf(yearString);
+				try {
+					year = Integer.valueOf(yearString);
+					if(year<0){
+						Alert alert = new Alert(AlertType.ERROR);
+						alert.initOwner(stage);
+						alert.setTitle("Error in song addition");
+						alert.setHeaderText("Can't add this song.");
+						alert.setContentText("Not a valid year");
+						alert.showAndWait();
+						return;
+					}
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.initOwner(stage);
+					alert.setTitle("Error in song addition");
+					alert.setHeaderText("Can't add this song.");
+					alert.setContentText("Not a number in year");
+					alert.showAndWait();
+					return;
+				}
 			}
 
 			Song song = new Song(title, artist, album, year);

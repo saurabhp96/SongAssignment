@@ -47,19 +47,19 @@
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Song Artist:" textAlignment="RIGHT" wrappingWidth="99.13671875" GridPane.columnIndex="3" GridPane.rowIndex="2" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Song Album:" textAlignment="RIGHT" wrappingWidth="96.666015625" GridPane.columnIndex="3" GridPane.rowIndex="3" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Song Year:" textAlignment="RIGHT" wrappingWidth="94.13671875" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-      <TextField fx:id="TitleOutput" editable="false" minHeight="-Infinity" minWidth="-Infinity" opacity="0.6" prefHeight="27.0" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+      <TextField fx:id="TitleOutput" editable="false" minHeight="-Infinity" minWidth="-Infinity" opacity="0.9" prefHeight="27.0" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
          <cursor>
             <Cursor fx:constant="DISAPPEAR" />
          </cursor></TextField>
-      <TextField fx:id="ArtistOutput" editable="false" minHeight="-Infinity" minWidth="-Infinity" opacity="0.6" prefHeight="27.0" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+      <TextField fx:id="ArtistOutput" editable="false" minHeight="-Infinity" minWidth="-Infinity" opacity="0.9" prefHeight="27.0" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
          <cursor>
             <Cursor fx:constant="DISAPPEAR" />
          </cursor></TextField>
-      <TextField fx:id="AlbumOutput" editable="false" minHeight="-Infinity" minWidth="-Infinity" opacity="0.6" prefHeight="27.0" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+      <TextField fx:id="AlbumOutput" editable="false" minHeight="-Infinity" minWidth="-Infinity" opacity="0.9" prefHeight="27.0" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
          <cursor>
             <Cursor fx:constant="DISAPPEAR" />
          </cursor></TextField>
-      <TextField fx:id="YearOutput" editable="false" opacity="0.6" GridPane.columnIndex="4" GridPane.rowIndex="4">
+      <TextField fx:id="YearOutput" editable="false" opacity="0.9" GridPane.columnIndex="4" GridPane.rowIndex="4">
          <cursor>
             <Cursor fx:constant="DISAPPEAR" />
          </cursor></TextField>
